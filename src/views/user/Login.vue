@@ -119,6 +119,8 @@ import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
 import { getSmsCaptcha, get2step } from '@/api/login'
+import storage from 'store'
+import { USER_ID } from '@/store/mutation-types'
 
 export default {
   components: {
@@ -247,7 +249,25 @@ export default {
       })
     },
     loginSuccess (res) {
-      console.log(res)
+      if (res.code === '200') {
+        storage.set(USER_ID, res.data.username)
+        this.$router.push({ path: '/' })
+        // 延迟 1 秒显示欢迎信息
+        setTimeout(() => {
+          this.$notification.success({
+            message: '欢迎',
+            description: `${timeFix()} ${res.data.name}，欢迎回来`
+          })
+        }, 1000)
+        this.isLoginError = false
+      } else {
+        this.isLoginError = true
+        this.$notification['error']({
+          message: '错误',
+          description: res.message || '请求出现错误，请稍后再试',
+          duration: 4
+        })
+      }
       // check res.homePage define, set $router.push name res.homePage
       // Why not enter onComplete
       /*
@@ -259,15 +279,6 @@ export default {
         })
       })
       */
-      this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      }, 1000)
-      this.isLoginError = false
     },
     requestFailed (err) {
       this.isLoginError = true
