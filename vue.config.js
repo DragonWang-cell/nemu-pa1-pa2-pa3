@@ -105,12 +105,13 @@ const vueConfig = {
     port: 8000,
     proxy: {
       '/api': { // 匹配模式，所有api开始的连接都匹配到下面服务器地址
-        target: 'http://localhost:8080', // 这是开发服务器的地址
+        // target: 'http://localhost:8080', // 这是开发服务器的地址
+        target: 'http://140.143.19.229/', // 这是开发服务器的地址
         ws: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
+        changeOrigin: true
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
       }
     }
       // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
@@ -127,7 +128,8 @@ const vueConfig = {
   productionSourceMap: false,
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
-  transpileDependencies: []
+  transpileDependencies: [],
+  publicPath: '/mng/'
 }
 
 // preview.pro.loacg.com only do not use in your production;
