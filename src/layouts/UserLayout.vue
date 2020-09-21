@@ -1,30 +1,7 @@
 <template>
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
-      <div class="top">
-        <div class="header">
-          <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
-          </a>
-        </div>
-        <div class="desc">
-          Ant Design 是西湖区最具影响力的 Web 设计规范
-        </div>
-      </div>
-
       <router-view />
-
-      <div class="footer">
-        <div class="links">
-          <a href="_self">帮助</a>
-          <a href="_self">隐私</a>
-          <a href="_self">条款</a>
-        </div>
-        <div class="copyright">
-          Copyright &copy; 2018 vueComponent
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -60,9 +37,9 @@ export default {
     .container {
       width: 100%;
       min-height: 100%;
-      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
-      background-size: 100%;
-      padding: 110px 0 144px;
+      background: url(~@/assets/login-bg.jpg) no-repeat;
+      background-size: 100% 100%;
+      padding: 131px 0 106px;
       position: relative;
 
       a {
@@ -111,9 +88,11 @@ export default {
       }
 
       .main {
-        min-width: 260px;
-        width: 368px;
         margin: 0 auto;
+        background: url(~@/assets/login-halo.png) no-repeat;
+        background-size: 100% 100%;
+        width: 984px;
+        height: 842px;
       }
 
       .footer {

@@ -1,108 +1,118 @@
 <template>
   <div class="main">
-    <a-form
-      id="formLogin"
-      class="user-layout-login"
-      ref="formLogin"
-      :form="form"
-      @submit="handleSubmit"
+    <div
+      class="user-layout"
     >
       <a-tabs
         :activeKey="customActiveKey"
-        :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
+        :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset', display: 'none' }"
         @change="handleTabClick"
       >
-        <a-tab-pane key="tab1" tab="账号密码登录">
+        <a-tab-pane key="tab1" tab="账号密码登录" style="margin: 0 auto;margin-top: 117px;">
+          <a-form
+            id="formLogin"
+            class="user-layout-login"
+            ref="formLogin"
+            :form="form"
+            @submit="handleSubmit"
+          >
+            <a-form-item class="title">区域风险指数系统</a-form-item>
+            <a-form-item style="margin: 0 auto;margin-bottom: 28px;width: 335px;">
+              <a-input
+                size="large"
+                type="text"
+                placeholder="用户名"
+                v-decorator="[
+                'username'
+                ]"
+              >
+                <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+              </a-input>
+            </a-form-item>
+
+            <a-form-item style="margin: 0 auto;margin-bottom: 14px;width: 335px;">
+              <a-input-password
+                size="large"
+                placeholder="密码"
+                v-decorator="[
+                'password'
+                ]"
+              >
+                <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+              </a-input-password>
+            </a-form-item>
+
+            <a-form-item style="margin: 0 auto;height: 40px; margin-bottom: 45px;width: 335px;">
+              <router-link
+                :to="{ name: 'recover', params: { user: 'aaa'} }"
+                class="forge-password"
+                style="color: #fff"
+              >忘记密码</router-link>
+              <a-form-item class="register" @click.native="handleTabClick('tab2')">注册账户</a-form-item>
+            </a-form-item>
+
+            <a-form-item style="width: 335px;margin: 0 auto;height: 55px;">
+              <a-button
+                size="large"
+                type="primary"
+                htmlType="submit"
+                class="login-button"
+                :loading="state.loginBtn"
+                :disabled="state.loginBtn"
+              >确定</a-button>
+            </a-form-item>
+          </a-form>
+        </a-tab-pane>
+
+        <a-tab-pane key="tab2" tab="注册" style="margin: 0 auto;margin-top: 117px;">
+          <a-form-item class="title">区域风险指数系统</a-form-item>
           <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;" message="账户或密码错误（admin/ant.design )" />
-          <a-form-item>
+          <a-form-item style="margin: 0 auto;margin-bottom: 28px;width: 335px;">
             <a-input
               size="large"
               type="text"
-              placeholder="账户: admin"
-              v-decorator="[
-                'username',
-                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
-              ]"
+              placeholder="用户名"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
 
-          <a-form-item>
+          <a-form-item style="margin: 0 auto;margin-bottom: 28px;width: 335px;">
             <a-input-password
               size="large"
-              placeholder="密码: admin or ant.design"
-              v-decorator="[
-                'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
-              ]"
+              placeholder="密码"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input-password>
           </a-form-item>
-        </a-tab-pane>
-        <a-tab-pane key="tab2" tab="手机号登录">
-          <a-form-item>
-            <a-input size="large" type="text" placeholder="手机号" v-decorator="['mobile', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]">
-              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
+
+          <a-form-item style="margin: 0 auto;margin-bottom: 14px;width: 335px;">
+            <a-input-password
+              size="large"
+              placeholder="确认密码"
+            >
+              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+            </a-input-password>
           </a-form-item>
 
-          <a-row :gutter="16">
-            <a-col class="gutter-row" :span="16">
-              <a-form-item>
-                <a-input size="large" type="text" placeholder="验证码" v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]">
-                  <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col class="gutter-row" :span="8">
-              <a-button
-                class="getCaptcha"
-                tabindex="-1"
-                :disabled="state.smsSendBtn"
-                @click.stop.prevent="getCaptcha"
-                v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"
-              ></a-button>
-            </a-col>
-          </a-row>
+          <a-form-item style="margin: 0 auto;height: 27px; margin-bottom: 25px;width: 335px;">
+            <a-form-item class="login" @click.native="handleTabClick('tab1')">登录</a-form-item>
+          </a-form-item>
+
+          <a-form-item style="width: 230px;margin: 0 auto;height: 65px;">
+            <a-button
+              size="large"
+              type="primary"
+              htmlType="submit"
+              class="login-button"
+              :loading="state.loginBtn"
+              :disabled="state.loginBtn"
+              style="width: 230px"
+            >注册</a-button>
+          </a-form-item>
         </a-tab-pane>
       </a-tabs>
-
-      <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox>
-        <router-link
-          :to="{ name: 'recover', params: { user: 'aaa'} }"
-          class="forge-password"
-          style="float: right;"
-        >忘记密码</router-link>
-      </a-form-item>
-
-      <a-form-item style="margin-top:24px">
-        <a-button
-          size="large"
-          type="primary"
-          htmlType="submit"
-          class="login-button"
-          :loading="state.loginBtn"
-          :disabled="state.loginBtn"
-        >确定</a-button>
-      </a-form-item>
-
-      <div class="user-login-other">
-        <span>其他登录方式</span>
-        <a>
-          <a-icon class="item-icon" type="alipay-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="taobao-circle"></a-icon>
-        </a>
-        <a>
-          <a-icon class="item-icon" type="weibo-circle"></a-icon>
-        </a>
-        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
-      </div>
-    </a-form>
+    </div>
 
     <two-step-captcha
       v-if="requiredTwoStepCaptcha"
@@ -177,20 +187,17 @@ export default {
       const {
         form: { validateFields },
         state,
-        customActiveKey,
         Login
       } = this
 
       state.loginBtn = true
 
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
-
-      validateFields(validateFieldsKey, { force: true }, (err, values) => {
+      validateFields(['username', 'password'], { force: true }, (err, values) => {
         if (!err) {
           console.log('login form', values)
           const loginParams = { ...values }
           delete loginParams.username
-          loginParams[!state.loginType ? 'email' : 'username'] = values.username
+          loginParams.username = values.username
           loginParams.password = md5(values.password)
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
@@ -293,9 +300,31 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.user-layout-login {
+.user-layout {
+  width: 590px;
+  height: 590px;
+  margin: 0 auto;
+  background: url(~@/assets/login-form-bg.png) no-repeat;
+  background-size: 100% 100%;
+  top: 132px;
+  position: relative;
+
   label {
-    font-size: 14px;
+    font-size: 16px;
+  }
+
+  .title{
+    margin: 0 auto;
+    margin-bottom: 38px;
+    width: 332px;
+    height: 38px;
+    font-family: AdobeHeitiStd-Regular;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-stretch: normal;
+    letter-spacing: 0px;
+    color: #ffffff;
   }
 
   .getCaptcha {
@@ -305,14 +334,46 @@ export default {
   }
 
   .forge-password {
-    font-size: 14px;
+    font-size: 16px;
+  }
+
+  .login {
+    color: #49f8f9;
+    font-size: 16px;
+    float: right;
+    text-decoration: none;
+    border-bottom: 1px solid #49f8f9;
+    display: inline-block;
+    height: 35px;
+    width: 50px;
+    text-align: center;
+  }
+  .register {
+    color: #49f8f9;
+    font-size: 16px;
+    float: right;
+    text-decoration: none;
+    border-bottom: 1px solid #49f8f9;
+    display: inline-block;
+    height: 35px;
   }
 
   button.login-button {
-    padding: 0 15px;
-    font-size: 16px;
-    height: 40px;
-    width: 100%;
+    font-size: 22px;
+    width: 338px;
+    height: 47px;
+    background-image: linear-gradient(89deg,
+    #185abc 0%,
+    rgba(24, 90, 188, 0.95) 30%,
+    rgba(73, 226, 249, 0.81) 100%),
+    linear-gradient(-90deg,
+    #5039fb 0%,
+    #008dff 100%);
+    background-blend-mode: normal,
+    normal;
+    box-shadow: 1px 3px 7px 0px rgba(0, 71, 132, 0.89);
+    border-radius: 22px;
+    border: none;
   }
 
   .user-login-other {
@@ -331,10 +392,6 @@ export default {
       &:hover {
         color: #1890ff;
       }
-    }
-
-    .register {
-      float: right;
     }
   }
 }
