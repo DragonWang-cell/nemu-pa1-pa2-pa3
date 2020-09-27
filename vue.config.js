@@ -105,10 +105,12 @@ const vueConfig = {
     port: 8000,
     proxy: {
       '/api': { // 匹配模式，所有api开始的连接都匹配到下面服务器地址
-        // target: 'http://localhost:8080', // 这是开发服务器的地址
-        target: 'http://140.143.19.229/', // 这是开发服务器的地址
         ws: false,
-        changeOrigin: true
+        changeOrigin: true,
+
+        target: 'http://140.143.19.229/' // 这是开发服务器的地址
+
+        // target: 'http://localhost:8080', // 这是开发服务器的地址
         // pathRewrite: {
         //   '^/api': ''
         // }

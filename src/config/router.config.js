@@ -26,9 +26,9 @@ export const asyncRouterMap = [
         children: [
           {
             path: '/home/Home',
-            name: '首页',
+            name: 'Home',
             component: () => import('@/views/home/Home'),
-            meta: { title: '首页', keepAlive: true, permission: [ 'home' ] }
+            meta: { title: '首页 ', keepAlive: true, permission: [ 'home' ] }
           }
         ]
       },
