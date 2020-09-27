@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { constantRouterMap } from '@/config/router.config'
+import { constantRouterMap, asyncRouterMap } from '@/config/router.config'
 
 // hack router push callback
 const originalPush = Router.prototype.push
@@ -13,5 +13,5 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'hash', // 默认是 history 可以改为 hash
-  routes: constantRouterMap
+  routes: constantRouterMap.concat(asyncRouterMap)
 })

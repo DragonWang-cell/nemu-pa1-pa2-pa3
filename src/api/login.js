@@ -48,10 +48,11 @@ export function getInfo (parameter) {
   })
 }
 
-export function getCurrentUserNav () {
+export function getCurrentUserNav (parameter) {
   return request({
     url: userApi.UserMenu,
-    method: 'get'
+    method: 'post',
+    data: parameter
   })
 }
 

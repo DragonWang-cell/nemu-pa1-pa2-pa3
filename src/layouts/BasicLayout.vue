@@ -18,7 +18,7 @@
     <ads v-if="isProPreviewSite && !collapsed"/>
     <!-- Ads end -->
 
-    <setting-drawer :settings="settings" @change="handleSettingChange" />
+<!--    <setting-drawer :settings="settings" @change="handleSettingChange" />-->
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>
@@ -40,6 +40,7 @@ import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
 import Ads from '@/components/Other/CarbonAds'
 import LogoSvg from '../assets/logo.svg?inline'
+import { asyncRouterMap } from '@/config/router.config.js'
 
 export default {
   name: 'BasicLayout',
@@ -90,7 +91,8 @@ export default {
     })
   },
   created () {
-    const routes = this.mainMenu.find(item => item.path === '/')
+    const routes = asyncRouterMap.find(item => item.path === '/')
+    // const routes = this.mainMenu.find(item => item.path === '/')
     this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {

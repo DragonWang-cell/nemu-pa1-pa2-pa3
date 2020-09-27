@@ -1,6 +1,5 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
-import { bxAnaalyse } from '@/core/icons'
 
 const RouteView = {
   name: 'RouteView',
@@ -14,316 +13,243 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/dashboard/workplace',
+    redirect: '/home/Home',
     children: [
-      // dashboard
+      // 首页
       {
-        path: '/dashboard',
-        name: 'dashboard',
-        redirect: '/dashboard/workplace',
+        path: '/home',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        redirect: '/home/Home',
+        name: 'home',
+        hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+        meta: { title: '首页', icon: 'home', keepAlive: true, permission: [ 'home' ] },
         children: [
           {
-            path: '/dashboard/analysis/:pageNo([1-9]\\d*)?',
-            name: 'Analysis',
-            component: () => import('@/views/dashboard/Analysis'),
-            meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: [ 'dashboard' ] }
-          },
-          // 外部链接
-          {
-            path: 'https://www.baidu.com/',
-            name: 'Monitor',
-            meta: { title: 'menu.dashboard.monitor', target: '_blank' }
-          },
-          {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: [ 'dashboard' ] }
+            path: '/home/Home',
+            name: '首页',
+            component: () => import('@/views/home/Home'),
+            meta: { title: '首页', keepAlive: true, permission: [ 'home' ] }
           }
         ]
       },
-
-      // forms
+      // 系统管理
       {
-        path: '/form',
-        redirect: '/form/base-form',
+        path: '/system',
         component: RouteView,
-        meta: { title: '表单页', icon: 'form', permission: [ 'form' ] },
+        redirect: '/system/Role',
+        name: 'system',
+        meta: { title: '系统管理', icon: 'home', keepAlive: true, permission: [ 'home' ] },
         children: [
           {
-            path: '/form/base-form',
-            name: 'BaseForm',
-            component: () => import('@/views/form/basicForm'),
-            meta: { title: '基础表单', keepAlive: true, permission: [ 'form' ] }
+            path: '/system/Role',
+            name: 'Role',
+            component: () => import('@/views/system/index'),
+            meta: { title: '角色管理', keepAlive: true, permission: [ 'home' ] }
           },
           {
-            path: '/form/step-form',
-            name: 'StepForm',
-            component: () => import('@/views/form/stepForm/StepForm'),
-            meta: { title: '分步表单', keepAlive: true, permission: [ 'form' ] }
+            path: '/system/User',
+            name: 'User',
+            component: () => import('@/views/system/index'),
+            meta: { title: '用户管理', keepAlive: true, permission: [ 'home' ] }
           },
           {
-            path: '/form/advanced-form',
-            name: 'AdvanceForm',
-            component: () => import('@/views/form/advancedForm/AdvancedForm'),
-            meta: { title: '高级表单', keepAlive: true, permission: [ 'form' ] }
+            path: '/system/Nav',
+            name: 'Nav',
+            component: () => import('@/views/system/index'),
+            meta: { title: '菜单管理', keepAlive: true, permission: [ 'home' ] }
+          },
+          {
+            path: '/system/Log',
+            name: 'Log',
+            component: () => import('@/views/system/index'),
+            meta: { title: '操作日志', keepAlive: true, permission: [ 'home' ] }
           }
         ]
       },
-
-      // list
+      // 一企一档
       {
-        path: '/list',
-        name: 'list',
+        path: '/enterprise',
         component: RouteView,
-        redirect: '/list/table-list',
-        meta: { title: '列表页', icon: 'table', permission: [ 'table' ] },
+        redirect: '/enterprise/Info',
+        name: 'enterprise',
+        meta: { title: '一企一档', icon: 'home', keepAlive: true, permission: [ 'home' ] },
         children: [
           {
-            path: '/list/table-list/:pageNo([1-9]\\d*)?',
-            name: 'TableListWrapper',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/list/TableList'),
-            meta: { title: '查询表格', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/list/basic-list',
-            name: 'BasicList',
-            component: () => import('@/views/list/BasicList'),
-            meta: { title: '标准列表', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/list/card',
-            name: 'CardList',
-            component: () => import('@/views/list/CardList'),
-            meta: { title: '卡片列表', keepAlive: true, permission: [ 'table' ] }
-          },
-          {
-            path: '/list/search',
-            name: 'SearchList',
-            component: () => import('@/views/list/search/SearchLayout'),
-            redirect: '/list/search/article',
-            meta: { title: '搜索列表', keepAlive: true, permission: [ 'table' ] },
-            children: [
-              {
-                path: '/list/search/article',
-                name: 'SearchArticles',
-                component: () => import('../views/list/search/Article'),
-                meta: { title: '搜索列表（文章）', permission: [ 'table' ] }
-              },
-              {
-                path: '/list/search/project',
-                name: 'SearchProjects',
-                component: () => import('../views/list/search/Projects'),
-                meta: { title: '搜索列表（项目）', permission: [ 'table' ] }
-              },
-              {
-                path: '/list/search/application',
-                name: 'SearchApplications',
-                component: () => import('../views/list/search/Applications'),
-                meta: { title: '搜索列表（应用）', permission: [ 'table' ] }
-              }
-            ]
-          }
-        ]
-      },
-
-      // profile
-      {
-        path: '/profile',
-        name: 'profile',
-        component: RouteView,
-        redirect: '/profile/basic',
-        meta: { title: '详情页', icon: 'profile', permission: [ 'profile' ] },
-        children: [
-          {
-            path: '/profile/basic',
-            name: 'ProfileBasic',
-            component: () => import('@/views/profile/basic'),
-            meta: { title: '基础详情页', permission: [ 'profile' ] }
-          },
-          {
-            path: '/profile/advanced',
-            name: 'ProfileAdvanced',
-            component: () => import('@/views/profile/advanced/Advanced'),
-            meta: { title: '高级详情页', permission: [ 'profile' ] }
-          }
-        ]
-      },
-
-      // result
-      {
-        path: '/result',
-        name: 'result',
-        component: RouteView,
-        redirect: '/result/success',
-        meta: { title: '结果页', icon: 'check-circle-o', permission: [ 'result' ] },
-        children: [
-          {
-            path: '/result/success',
-            name: 'ResultSuccess',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Success'),
-            meta: { title: '成功', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
-          },
-          {
-            path: '/result/fail',
-            name: 'ResultFail',
-            component: () => import(/* webpackChunkName: "result" */ '@/views/result/Error'),
-            meta: { title: '失败', keepAlive: false, hiddenHeaderContent: true, permission: [ 'result' ] }
-          }
-        ]
-      },
-
-      // Exception
-      {
-        path: '/exception',
-        name: 'exception',
-        component: RouteView,
-        redirect: '/exception/403',
-        meta: { title: '异常页', icon: 'warning', permission: [ 'exception' ] },
-        children: [
-          {
-            path: '/exception/403',
-            name: 'Exception403',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/403'),
-            meta: { title: '403', permission: [ 'exception' ] }
-          },
-          {
-            path: '/exception/404',
-            name: 'Exception404',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404'),
-            meta: { title: '404', permission: [ 'exception' ] }
-          },
-          {
-            path: '/exception/500',
-            name: 'Exception500',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/500'),
-            meta: { title: '500', permission: [ 'exception' ] }
-          }
-        ]
-      },
-
-      // account
-      {
-        path: '/account',
-        component: RouteView,
-        redirect: '/account/center',
-        name: 'account',
-        meta: { title: '个人页', icon: 'user', keepAlive: true, permission: [ 'user' ] },
-        children: [
-          {
-            path: '/account/center',
-            name: 'center',
-            component: () => import('@/views/account/center'),
-            meta: { title: '个人中心', keepAlive: true, permission: [ 'user' ] }
-          },
-          {
-            path: '/account/settings',
-            name: 'settings',
-            component: () => import('@/views/account/settings/Index'),
-            meta: { title: '个人设置', hideHeader: true, permission: [ 'user' ] },
-            redirect: '/account/settings/base',
-            hideChildrenInMenu: true,
-            children: [
-              {
-                path: '/account/settings/base',
-                name: 'BaseSettings',
-                component: () => import('@/views/account/settings/BaseSetting'),
-                meta: { title: '基本设置', hidden: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/security',
-                name: 'SecuritySettings',
-                component: () => import('@/views/account/settings/Security'),
-                meta: { title: '安全设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/custom',
-                name: 'CustomSettings',
-                component: () => import('@/views/account/settings/Custom'),
-                meta: { title: '个性化设置', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/binding',
-                name: 'BindingSettings',
-                component: () => import('@/views/account/settings/Binding'),
-                meta: { title: '账户绑定', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              },
-              {
-                path: '/account/settings/notification',
-                name: 'NotificationSettings',
-                component: () => import('@/views/account/settings/Notification'),
-                meta: { title: '新消息通知', hidden: true, keepAlive: true, permission: [ 'user' ] }
-              }
-            ]
-          }
-        ]
-      }
-
-      // other
-      /*
-      {
-        path: '/other',
-        name: 'otherPage',
-        component: PageView,
-        meta: { title: '其他组件', icon: 'slack', permission: [ 'dashboard' ] },
-        redirect: '/other/icon-selector',
-        children: [
-          {
-            path: '/other/icon-selector',
-            name: 'TestIconSelect',
-            component: () => import('@/views/other/IconSelectorView'),
-            meta: { title: 'IconSelector', icon: 'tool', keepAlive: true, permission: [ 'dashboard' ] }
-          },
-          {
-            path: '/other/list',
+            path: '/enterprise/enterpriseInfo/EnterpriseList',
+            name: 'enterpriseInfo',
             component: RouteView,
-            meta: { title: '业务布局', icon: 'layout', permission: [ 'support' ] },
-            redirect: '/other/list/tree-list',
+            meta: { title: '企业信息', keepAlive: true, permission: [ 'home' ] },
             children: [
               {
-                path: '/other/list/tree-list',
-                name: 'TreeList',
-                component: () => import('@/views/other/TreeList'),
-                meta: { title: '树目录表格', keepAlive: true }
+                path: '/enterprise/enterpriseInfo/EnterpriseList',
+                name: 'EnterpriseList',
+                component: () => import('@/views/enterprise/enterpriseInfo/EnterpriseList'),
+                meta: { title: '企业列表', keepAlive: true, permission: [ 'home' ] }
               },
               {
-                path: '/other/list/edit-table',
-                name: 'EditList',
-                component: () => import('@/views/other/TableInnerEditList'),
-                meta: { title: '内联编辑表格', keepAlive: true }
+                path: '/enterprise/enterpriseInfo/AccidentList',
+                name: 'AccidentList',
+                component: () => import('@/views/enterprise/enterpriseInfo/AccidentList'),
+                meta: { title: '事故隐患管理', keepAlive: true, permission: [ 'home' ] }
+              }
+            ]
+          },
+          {
+            path: '/enterprise/riskInfo/MajorHazardList',
+            name: 'riskInfo',
+            component: RouteView,
+            meta: { title: '危险信息', keepAlive: true, permission: [ 'home' ] },
+            children: [
+              {
+                path: '/enterprise/riskInfo/MajorHazardList',
+                name: 'MajorHazardList',
+                component: () => import('@/views/enterprise/riskInfo/MajorHazardList'),
+                meta: { title: '重大危险源', keepAlive: true, permission: [ 'home' ] }
               },
               {
-                path: '/other/list/user-list',
-                name: 'UserList',
-                component: () => import('@/views/other/UserList'),
-                meta: { title: '用户列表', keepAlive: true }
+                path: '/enterprise/riskInfo/ChemicalInfoList',
+                name: 'ChemicalInfoList',
+                component: () => import('@/views/enterprise/riskInfo/ChemicalInfoList'),
+                meta: { title: '化学品信息', keepAlive: true, permission: [ 'home' ] }
               },
               {
-                path: '/other/list/role-list',
-                name: 'RoleList',
-                component: () => import('@/views/other/RoleList'),
-                meta: { title: '角色列表', keepAlive: true }
+                path: '/enterprise/riskInfo/HighRiskProcessesList',
+                name: 'HighRiskProcessesList',
+                component: () => import('@/views/enterprise/riskInfo/HighRiskProcessesList'),
+                meta: { title: '高危工艺', keepAlive: true, permission: [ 'home' ] }
+              }
+            ]
+          },
+          {
+            path: '/enterprise/vulnerabilityInfo',
+            name: 'vulnerabilityInfo',
+            component: RouteView,
+            meta: { title: '脆弱性信息', keepAlive: true, permission: [ 'home' ] },
+            children: [
+              {
+                path: '/enterprise/vulnerabilityInfo/EnterprisePersonnelList',
+                name: 'EnterprisePersonnelList',
+                component: () => import('@/views/enterprise/vulnerabilityInfo/EnterprisePersonnelList'),
+                meta: { title: '企业人员', keepAlive: true, permission: [ 'home' ] }
               },
               {
-                path: '/other/list/system-role',
-                name: 'SystemRole',
-                component: () => import('@/views/role/RoleList'),
-                meta: { title: '角色列表2', keepAlive: true }
+                path: '/enterprise/vulnerabilityInfo/AroundPersonnelList',
+                name: 'AroundPersonnelList',
+                component: () => import('@/views/enterprise/vulnerabilityInfo/AroundPersonnelList'),
+                meta: { title: '周边人员', keepAlive: true, permission: [ 'home' ] }
               },
               {
-                path: '/other/list/permission-list',
-                name: 'PermissionList',
-                component: () => import('@/views/other/PermissionList'),
-                meta: { title: '权限列表', keepAlive: true }
+                path: '/enterprise/vulnerabilityInfo/EnterpriseBuildingList',
+                name: 'EnterpriseBuildingList',
+                component: () => import('@/views/enterprise/vulnerabilityInfo/EnterpriseBuildingList'),
+                meta: { title: '企业建筑', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/vulnerabilityInfo/AroundBuildingList',
+                name: 'AroundBuildingList',
+                component: () => import('@/views/enterprise/vulnerabilityInfo/AroundBuildingList'),
+                meta: { title: '周边建筑', keepAlive: true, permission: [ 'home' ] }
+              }
+            ]
+          },
+          {
+            path: '/enterprise/managementResilience',
+            name: 'managementResilience',
+            component: RouteView,
+            meta: { title: '管理韧性', keepAlive: true, permission: [ 'home' ] },
+            children: [
+              {
+                path: '/enterprise/managementResilience/RulesRegulationsList',
+                name: 'RulesRegulationsList',
+                component: () => import('@/views/enterprise/managementResilience/RulesRegulationsList'),
+                meta: { title: '规章制度', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/managementResilience/PersonnelTrainingList',
+                name: 'PersonnelTrainingList',
+                component: () => import('@/views/enterprise/managementResilience/PersonnelTrainingList'),
+                meta: { title: '人员培训', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/managementResilience/InspectionMeetingList',
+                name: 'InspectionMeetingList',
+                component: () => import('@/views/enterprise/managementResilience/InspectionMeetingList'),
+                meta: { title: '检测会议', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/managementResilience/EmergencyPlanList',
+                name: 'EmergencyPlanList',
+                component: () => import('@/views/enterprise/managementResilience/EmergencyPlanList'),
+                meta: { title: '应急预案', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/managementResilience/MedicalSecurityList',
+                name: 'MedicalSecurityList',
+                component: () => import('@/views/enterprise/managementResilience/MedicalSecurityList'),
+                meta: { title: '医疗保障', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/enterprise/managementResilience/EscapeDrillList',
+                name: 'EscapeDrillList',
+                component: () => import('@/views/enterprise/managementResilience/EscapeDrillList'),
+                meta: { title: '逃生演习', keepAlive: true, permission: [ 'home' ] }
               }
             ]
           }
         ]
+      },
+      // 区域风险权重
+      {
+        path: '/areaRisk',
+        component: RouteView,
+        redirect: '/areaRisk/areaRiskAttr',
+        name: 'areaRisk',
+        meta: { title: '区域风险', icon: 'home', keepAlive: true, permission: [ 'home' ] },
+        children: [
+          {
+            path: '/areaRisk/areaRiskAttr/EnterpriseList',
+            name: 'areaRiskAttr',
+            component: RouteView,
+            meta: { title: '区域风险属性', keepAlive: true, permission: [ 'home' ] },
+            children: [
+              {
+                path: '/areaRisk/areaRiskAttr/RiskFactorOntologyList',
+                name: 'RiskFactorOntologyList',
+                component: () => import('@/views/areaRisk/areaRiskAttr/RiskFactorOntologyList'),
+                meta: { title: '致险因子本体', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/areaRisk/areaRiskAttr/VulnerabilityOntologyList',
+                name: 'VulnerabilityOntologyList',
+                component: () => import('@/views/areaRisk/areaRiskAttr/VulnerabilityOntologyList'),
+                meta: { title: '脆弱性本体', keepAlive: true, permission: [ 'home' ] }
+              },
+              {
+                path: '/areaRisk/areaRiskAttr/PreventionCapabilityOntologyList',
+                name: 'PreventionCapabilityOntologyList',
+                component: () => import('@/views/areaRisk/areaRiskAttr/PreventionCapabilityOntologyList'),
+                meta: { title: '防范能力本体', keepAlive: true, permission: [ 'home' ] }
+              }
+            ]
+          }
+        ]
+      },
+      // 历史事件列表
+      {
+        path: '/historicalEvent',
+        component: RouteView,
+        redirect: '/historicalEvent/HistoricalEventList',
+        name: 'historicalEvent',
+        meta: { title: '历史事件', icon: 'home', keepAlive: true, permission: [ 'home' ] },
+        children: [
+          {
+            path: '/historicalEvent/HistoricalEventList',
+            name: 'HistoricalEventList',
+            component: () => import('@/views/historicalEvent/HistoricalEventList'),
+            meta: { title: '历史事件', keepAlive: true, permission: [ 'home' ] }
+          }
+        ]
       }
-      */
     ]
   },
   {
