@@ -22,11 +22,7 @@
             >
               <a-select
                 placeholder="输入危化品"
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">氢气</a-select-option>
                 <a-select-option value="2">甲烷</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -37,11 +33,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['code',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="code"
                 placeholder="输入危化品" />
             </a-form-item>
             <a-form-item
@@ -51,11 +42,7 @@
             >
               <a-select
                 placeholder="输入所属公司"
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">公司1</a-select-option>
                 <a-select-option value="2">公司2</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -66,12 +53,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              <a-select>
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
               </a-select>
@@ -81,11 +63,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入通风情况" />
             </a-form-item>
             <a-form-item
@@ -93,11 +70,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入与其他氧化剂距离" />
             </a-form-item>
             <a-form-item
@@ -105,11 +77,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入与明火距离" />
             </a-form-item>
             <a-form-item
@@ -117,11 +84,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入与其他可燃性距离" />
             </a-form-item>
             <a-form-item
@@ -129,12 +91,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              <a-select>
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
               </a-select>
@@ -146,12 +103,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              <a-select>
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
               </a-select>
@@ -163,11 +115,7 @@
             >
               <a-select
                 placeholder="输入压力等级"
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">常压</a-select-option>
                 <a-select-option value="2">低压</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -178,11 +126,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入压力值" />
             </a-form-item>
             <a-form-item
@@ -190,11 +133,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入浓度" />
             </a-form-item>
             <a-form-item
@@ -202,11 +140,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入环境温度需求" />
             </a-form-item>
             <a-form-item
@@ -214,11 +147,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入环境湿度需求" />
             </a-form-item>
             <a-form-item
@@ -226,11 +154,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入数量" />
             </a-form-item>
             <a-form-item
@@ -238,11 +161,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入数量上限" />
             </a-form-item>
             <a-form-item
@@ -250,12 +168,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              <a-select>
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
               </a-select>

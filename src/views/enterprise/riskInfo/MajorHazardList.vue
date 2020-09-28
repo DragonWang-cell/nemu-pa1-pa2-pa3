@@ -5,29 +5,19 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="企业名称">
+              <a-form-item label="重大危险源名称">
                 <a-input v-model="queryParam.name" placeholder=""/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item label="法人">
+              <a-form-item label="所属公司">
                 <a-input v-model="queryParam.fr" placeholder=""/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
               <a-col :md="8" :sm="24">
-                <a-form-item label="所属区域">
-                  <a-select v-model="queryParam.area" placeholder="请选择" default-value="0">
-                    <a-select-option value="0">全部</a-select-option>
-                    <a-select-option value="1">南开区</a-select-option>
-                    <a-select-option value="2">河西区</a-select-option>
-                    <a-select-option value="3">等</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :md="8" :sm="24">
-                <a-form-item label="企业地址">
-                  <a-input v-model="queryParam.address" placeholder=""/>
+                <a-form-item label="重大危险源备案号">
+                  <a-input v-model="queryParam.fr" placeholder=""/>
                 </a-form-item>
               </a-col>
             </template>
@@ -94,29 +84,29 @@ import MajorHazardForm from './modules/MajorHazardForm'
 
 const columns = [
   {
-    title: '企业名称',
-    dataIndex: 'name',
-    scopedSlots: { customRender: 'name' }
+    title: '重大危险源名称',
+    dataIndex: 'key1',
+    scopedSlots: { customRender: 'key1' }
   },
   {
-    title: '法人',
-    dataIndex: 'fr',
-    scopedSlots: { customRender: 'fr' }
+    title: '所属公司',
+    dataIndex: 'key2',
+    scopedSlots: { customRender: 'key2' }
   },
   {
-    title: '注册资金',
-    dataIndex: 'zczj',
-    scopedSlots: { customRender: 'zczj' }
+    title: '单元类型',
+    dataIndex: 'key3',
+    scopedSlots: { customRender: 'key3' }
   },
   {
-    title: '所属区域',
-    dataIndex: 'areaName',
-    scopedSlots: { customRender: 'areaName' }
+    title: '重大危险源级别',
+    dataIndex: 'key4',
+    scopedSlots: { customRender: 'key4' }
   },
   {
-    title: '企业地址',
-    dataIndex: 'address',
-    scopedSlots: { customRender: 'address' }
+    title: '详细地址',
+    dataIndex: 'key5',
+    scopedSlots: { customRender: 'key5' }
   },
   {
     title: '操作',
@@ -161,12 +151,11 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
-                name: '企业名称' + tmpKey,
-                fr: '法人' + tmpKey,
-                zczj: '7400.0000',
-                area: '2',
-                areaName: '河西区',
-                address: '和平区天津市'
+                key1: '重大危险源' + tmpKey,
+                key2: '所属公司' + tmpKey,
+                key3: '单元类型' + tmpKey,
+                key4: '重大危险源级别' + tmpKey,
+                key5: '详细地址' + tmpKey
               })
             }
             return {

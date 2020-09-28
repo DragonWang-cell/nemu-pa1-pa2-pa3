@@ -23,7 +23,7 @@
                 type="text"
                 placeholder="用户名"
                 v-decorator="[
-                'username'
+                  'username'
                 ]"
               >
                 <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -35,7 +35,7 @@
                 size="large"
                 placeholder="密码"
                 v-decorator="[
-                'password'
+                  'password'
                 ]"
               >
                 <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>

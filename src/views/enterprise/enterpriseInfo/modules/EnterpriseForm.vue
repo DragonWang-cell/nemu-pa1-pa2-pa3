@@ -20,11 +20,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
                 placeholder="输入企业名称" />
             </a-form-item>
             <a-form-item
@@ -32,11 +27,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['code',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="code"
                 placeholder="输入统一社会信用代码" />
             </a-form-item>
             <a-form-item
@@ -46,11 +36,7 @@
             >
               <a-select
                 placeholder="输入所属区域"
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">南开区</a-select-option>
                 <a-select-option value="2">河西区</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -61,11 +47,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
-                name="date1"
-                v-decorator="['date1',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
                 placeholder="输入成立日期" />
             </a-form-item>
             <a-form-item
@@ -73,11 +54,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['zczj',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="zczj"
                 placeholder="输入注册资金" />
             </a-form-item>
             <a-form-item
@@ -85,11 +61,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['address',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="address"
                 placeholder="输入注册地址" />
             </a-form-item>
             <a-form-item
@@ -97,11 +68,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['fr',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="fr"
                 placeholder="输入法人" />
             </a-form-item>
           </a-col>
@@ -111,13 +77,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入经营范围" />
             </a-form-item>
             <a-form-item
@@ -125,13 +84,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入企业地址" />
             </a-form-item>
             <a-form-item
@@ -139,13 +91,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入经度" />
             </a-form-item>
             <a-form-item
@@ -153,13 +98,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入纬度" />
             </a-form-item>
             <a-form-item
@@ -167,13 +105,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入联系人" />
             </a-form-item>
             <a-form-item
@@ -181,13 +112,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入联系电话" />
             </a-form-item>
             <a-form-item
@@ -195,13 +119,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
                 placeholder="输入联系邮箱" />
             </a-form-item>
           </a-col>

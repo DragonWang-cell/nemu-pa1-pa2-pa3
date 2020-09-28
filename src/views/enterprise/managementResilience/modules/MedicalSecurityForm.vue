@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="企业"
+    title="医疗保障"
     :width="1440"
     :visible="visible"
     :confirmLoading="loading"
@@ -16,193 +16,73 @@
               <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
-              label="企业名称"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="['name',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="name"
-                placeholder="输入企业名称" />
-            </a-form-item>
-            <a-form-item
-              label="统一社会信用代码"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="['code',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="code"
-                placeholder="输入统一社会信用代码" />
-            </a-form-item>
-            <a-form-item
-              label="所属区域"
+              label="所在公司"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
               <a-select
-                placeholder="输入所属区域"
-                name="area"
-                v-decorator="['area',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
-                <a-select-option value="1">南开区</a-select-option>
-                <a-select-option value="2">河西区</a-select-option>
+                placeholder="输入所在公司"
+              >
+                <a-select-option value="1">公司1</a-select-option>
+                <a-select-option value="2">公司2</a-select-option>
                 <a-select-option value="3">等</a-select-option>
               </a-select>
             </a-form-item>
             <a-form-item
-              label="成立日期"
+              label="医疗措施"
               :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-date-picker
-                name="date1"
-                v-decorator="['date1',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                placeholder="输入成立日期" />
+              :wrapperCol="wrapperCol"
+            >
+              <a-select
+                placeholder="输入医疗措施"
+              >
+                <a-select-option value="1">医院</a-select-option>
+                <a-select-option value="2">诊所</a-select-option>
+                <a-select-option value="3">等</a-select-option>
+              </a-select>
             </a-form-item>
             <a-form-item
-              label="注册资金"
+              label="事故流程预案"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol">
+              <a-textarea
+                :rows="10"
+                placeholder="输入事故流程预案" />
+            </a-form-item>
+            <a-form-item
+              label="医疗设置规模"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['zczj',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="zczj"
-                placeholder="输入注册资金" />
+                placeholder="输入医疗设置规模" />
             </a-form-item>
             <a-form-item
-              label="注册地址"
+              label="爆炸救治"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['address',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="address"
-                placeholder="输入注册地址" />
+                placeholder="输入爆炸救治" />
             </a-form-item>
             <a-form-item
-              label="法人"
+              label="中毒救治"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['fr',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="fr"
-                placeholder="输入法人" />
+                placeholder="输入中毒救治" />
             </a-form-item>
-          </a-col>
-          <a-col :md="12" :sm="24">
             <a-form-item
-              label="经营范围"
+              label="腐蚀救治"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入经营范围" />
+                placeholder="输入腐蚀救治" />
             </a-form-item>
             <a-form-item
-              label="企业地址"
+              label="伤亡救治"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入企业地址" />
-            </a-form-item>
-            <a-form-item
-              label="经度"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入经度" />
-            </a-form-item>
-            <a-form-item
-              label="纬度"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入纬度" />
-            </a-form-item>
-            <a-form-item
-              label="联系人"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入联系人" />
-            </a-form-item>
-            <a-form-item
-              label="联系电话"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入联系电话" />
-            </a-form-item>
-            <a-form-item
-              label="联系邮箱"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol">
-              <a-input
-                v-decorator="[
-              'name',
-              {rules: [
-                { required: true, message: '请输入！' },
-                {required: true, min: 5, message: '请输入至少五个字符！'}]}
-            ]"
-                name="name"
-                placeholder="输入联系邮箱" />
+                placeholder="输入伤亡救治" />
             </a-form-item>
           </a-col>
         </a-row>

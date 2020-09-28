@@ -95,29 +95,34 @@ import RulesRegulationsForm from './modules/RulesRegulationsForm'
 
 const columns = [
   {
-    title: '企业名称',
-    dataIndex: 'name',
-    scopedSlots: { customRender: 'name' }
+    title: '所在公司',
+    dataIndex: 'key1',
+    scopedSlots: { customRender: 'key1' }
   },
   {
-    title: '法人',
-    dataIndex: 'fr',
-    scopedSlots: { customRender: 'fr' }
+    title: '文件名',
+    dataIndex: 'key2',
+    scopedSlots: { customRender: 'key2' }
   },
   {
-    title: '注册资金',
-    dataIndex: 'zczj',
-    scopedSlots: { customRender: 'zczj' }
+    title: '类别',
+    dataIndex: 'key3',
+    scopedSlots: { customRender: 'key3' }
   },
   {
-    title: '所属区域',
-    dataIndex: 'areaName',
-    scopedSlots: { customRender: 'areaName' }
+    title: '重要程度',
+    dataIndex: 'key4',
+    scopedSlots: { customRender: 'key4' }
   },
   {
-    title: '企业地址',
-    dataIndex: 'address',
-    scopedSlots: { customRender: 'address' }
+    title: '时间',
+    dataIndex: 'key5',
+    scopedSlots: { customRender: 'key5' }
+  },
+  {
+    title: '填报人',
+    dataIndex: 'key6',
+    scopedSlots: { customRender: 'key6' }
   },
   {
     title: '操作',
@@ -162,12 +167,12 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
-                name: '企业名称' + tmpKey,
-                fr: '法人' + tmpKey,
-                zczj: '7400.0000',
-                area: '2',
-                areaName: '河西区',
-                address: '和平区天津市'
+                key1: '所在公司' + tmpKey,
+                key2: '文件名' + tmpKey,
+                key3: '类别' + tmpKey,
+                key4: '重要程度' + tmpKey,
+                key5: '时间' + tmpKey,
+                key6: '填报人' + tmpKey
               })
             }
             return {

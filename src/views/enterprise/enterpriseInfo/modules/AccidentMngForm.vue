@@ -20,11 +20,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['key1',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="key1"
                 placeholder="输入所属公司" />
             </a-form-item>
             <a-form-item
@@ -32,11 +27,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['key2',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="key2"
                 placeholder="输入隐患名称" />
             </a-form-item>
             <a-form-item
@@ -44,11 +34,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
-                name="key3"
-                v-decorator="['key3',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
                 placeholder="输入隐患排查时间" />
             </a-form-item>
             <a-form-item
@@ -56,11 +41,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['key4',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="key4"
                 placeholder="输入隐患地点" />
             </a-form-item>
             <a-form-item
@@ -70,11 +50,7 @@
             >
               <a-select
                 placeholder="输入隐患类别"
-                name="key5"
-                v-decorator="['key5',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">泄露</a-select-option>
                 <a-select-option value="2">爆炸</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -87,11 +63,7 @@
             >
               <a-select
                 placeholder="输入隐患级别"
-                name="key6"
-                v-decorator="['key6',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]">
+              >
                 <a-select-option value="1">一级</a-select-option>
                 <a-select-option value="2">二级</a-select-option>
                 <a-select-option value="3">等</a-select-option>
@@ -102,11 +74,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
-                v-decorator="['key7',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="key7"
                 placeholder="输入治理要求" />
             </a-form-item>
             <a-form-item
@@ -114,11 +81,6 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
-                name="key9"
-                v-decorator="['key9',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
                 placeholder="输入治理时限" />
             </a-form-item>
 
@@ -130,11 +92,6 @@
               :wrapperCol="wrapperCol">
               <a-textarea
                 :rows="15"
-                v-decorator="['key10',{rules: [
-                  { required: true, message: '请输入！' },
-                  {required: true, min: 5, message: '请输入至少五个字符！'}]}
-                ]"
-                name="key10"
                 placeholder="输入隐患内容" />
             </a-form-item>
             <a-form-item
