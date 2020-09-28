@@ -13,13 +13,14 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="所属公司"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key1']"
                 placeholder="输入所属公司" />
             </a-form-item>
             <a-form-item
@@ -27,6 +28,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key3']"
                 placeholder="输入隐患名称" />
             </a-form-item>
             <a-form-item
@@ -34,6 +36,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
+                v-decorator="['key2']"
                 placeholder="输入隐患排查时间" />
             </a-form-item>
             <a-form-item
@@ -41,6 +44,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key4']"
                 placeholder="输入隐患地点" />
             </a-form-item>
             <a-form-item
@@ -49,6 +53,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key6_id']"
                 placeholder="输入隐患类别"
               >
                 <a-select-option value="1">泄露</a-select-option>
@@ -62,6 +67,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key7_id']"
                 placeholder="输入隐患级别"
               >
                 <a-select-option value="1">一级</a-select-option>
@@ -74,6 +80,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key10']"
                 placeholder="输入治理要求" />
             </a-form-item>
             <a-form-item
@@ -81,6 +88,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
+                v-decorator="['key9']"
                 placeholder="输入治理时限" />
             </a-form-item>
 
@@ -92,6 +100,7 @@
               :wrapperCol="wrapperCol">
               <a-textarea
                 :rows="15"
+                v-decorator="['key5']"
                 placeholder="输入隐患内容" />
             </a-form-item>
             <a-form-item

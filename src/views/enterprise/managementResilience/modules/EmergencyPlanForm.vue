@@ -13,7 +13,7 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="所在公司"
@@ -21,6 +21,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key1_id']"
                 placeholder="输入所在公司"
               >
                 <a-select-option value="1">公司1</a-select-option>
@@ -33,6 +34,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key2']"
                 placeholder="输入应急预案名称" />
             </a-form-item>
             <a-form-item
@@ -40,6 +42,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key3']"
                 placeholder="输入应急预案编号" />
             </a-form-item>
             <a-form-item
@@ -48,6 +51,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key4_id']"
                 placeholder="输入预案类型"
               >
                 <a-select-option value="1">企业预案</a-select-option>
@@ -61,6 +65,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key5_id']"
                 placeholder="输入是否用于重大危险源"
               >
                 <a-select-option value="1">是</a-select-option>
@@ -73,6 +78,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key6_id']"
                 placeholder="输入发布状态"
               >
                 <a-select-option value="1">已发布</a-select-option>
@@ -84,6 +90,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
+                v-decorator="['key7']"
                 placeholder="输入发布时间" />
             </a-form-item>
           </a-col>
@@ -97,7 +104,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'fr', 'zczj', 'area', 'address']
+const fields = ['key', 'key1_id', 'key2', 'key3', 'key4_id', 'key5_id', 'key6_id', 'key7']
 export default {
   props: {
     visible: {

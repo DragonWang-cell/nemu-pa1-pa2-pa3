@@ -164,6 +164,7 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
                 key1: '危化品' + tmpKey,
                 key2: '所属公司' + tmpKey,
                 key3: '2',

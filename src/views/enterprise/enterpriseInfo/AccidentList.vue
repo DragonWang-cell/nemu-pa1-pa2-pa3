@@ -186,16 +186,19 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
-                key1: '事故/隐患管理' + tmpKey,
-                key2: '事故/隐患管理' + tmpKey,
-                key3: '事故/隐患管理' + tmpKey,
-                key4: '事故/隐患管理' + tmpKey,
-                key5: '事故/隐患管理' + tmpKey,
-                key6: '事故/隐患管理' + tmpKey,
-                key7: '事故/隐患管理' + tmpKey,
-                key8: '事故/隐患管理' + tmpKey,
-                key9: '事故/隐患管理' + tmpKey,
-                key10: '事故/隐患管理' + tmpKey
+                key: tmpKey,
+                key1: '所属公司' + tmpKey,
+                key2: '2020-01-01',
+                key3: '隐患名称' + tmpKey,
+                key4: '隐患地点' + tmpKey,
+                key5: '隐患内容' + tmpKey,
+                key6_id: '2',
+                key6: '隐患类别' + tmpKey,
+                key7_id: '2',
+                key7: '隐患级别' + tmpKey,
+                key8: '安全防范措施和应急预案' + tmpKey,
+                key9: '2020-01-02',
+                key10: '治理要求' + tmpKey
               })
             }
             return {

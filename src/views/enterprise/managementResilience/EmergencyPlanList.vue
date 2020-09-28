@@ -162,13 +162,18 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
+                key1_id: '2',
                 key1: '所在公司' + tmpKey,
                 key2: '应急预案名称' + tmpKey,
                 key3: '应急预案编号' + tmpKey,
-                key4: '预案类型' + tmpKey,
+                key4_id: '2',
+                key4: '政府预案',
+                key5_id: '2',
                 key5: '是否用于重大危险源' + tmpKey,
+                key6_id: '2',
                 key6: '发布状态' + tmpKey,
-                key7: '发布时间' + tmpKey
+                key7: '2020-01-01'
               })
             }
             return {

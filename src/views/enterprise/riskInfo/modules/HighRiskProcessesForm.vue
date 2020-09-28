@@ -13,13 +13,14 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="所属公司"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['a1']"
                 placeholder="输入所属公司" />
             </a-form-item>
             <a-form-item
@@ -27,6 +28,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['a2']"
                 placeholder="输入高危工艺" />
             </a-form-item>
             <a-form-item
@@ -34,7 +36,9 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
             >
-              <a-select>
+              <a-select
+                v-decorator="['a3']"
+              >
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
               </a-select>
@@ -60,7 +64,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'fr', 'zczj', 'area', 'address']
+const fields = ['key', 'a1', 'a2', 'a3', 'a4']
 export default {
   props: {
     visible: {

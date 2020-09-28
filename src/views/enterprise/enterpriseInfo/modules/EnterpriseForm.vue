@@ -13,13 +13,14 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="企业名称"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['name']"
                 placeholder="输入企业名称" />
             </a-form-item>
             <a-form-item
@@ -35,6 +36,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['area']"
                 placeholder="输入所属区域"
               >
                 <a-select-option value="1">南开区</a-select-option>
@@ -54,6 +56,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['zczj']"
                 placeholder="输入注册资金" />
             </a-form-item>
             <a-form-item
@@ -68,6 +71,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['fr']"
                 placeholder="输入法人" />
             </a-form-item>
           </a-col>
@@ -84,6 +88,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['address']"
                 placeholder="输入企业地址" />
             </a-form-item>
             <a-form-item
@@ -132,7 +137,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'fr', 'zczj', 'area', 'address']
+const fields = ['key', 'name', 'fr', 'zczj', 'area', 'address']
 export default {
   props: {
     visible: {

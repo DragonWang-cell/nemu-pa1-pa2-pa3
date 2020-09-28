@@ -13,13 +13,14 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="文件名"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key2']"
                 placeholder="输入文件名" />
             </a-form-item>
             <a-form-item
@@ -28,6 +29,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key1']"
                 placeholder="输入所在公司"
               >
                 <a-select-option value="1">公司1</a-select-option>
@@ -41,6 +43,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key3']"
                 placeholder="输入类别"
               >
                 <a-select-option value="1">法规</a-select-option>
@@ -48,10 +51,24 @@
               </a-select>
             </a-form-item>
             <a-form-item
+              label="重要程度"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-select
+                v-decorator="['key4']"
+                placeholder="输入重要程度"
+              >
+                <a-select-option value="1">重要</a-select-option>
+                <a-select-option value="2">一般</a-select-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item
               label="时间"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-date-picker
+                v-decorator="['key5']"
                 placeholder="输入时间" />
             </a-form-item>
             <a-form-item
@@ -59,6 +76,7 @@
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key6']"
                 placeholder="输入填报人" />
             </a-form-item>
             <a-form-item
@@ -81,7 +99,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'fr', 'zczj', 'area', 'address']
+const fields = ['key', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6']
 export default {
   props: {
     visible: {

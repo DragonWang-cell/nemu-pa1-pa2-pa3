@@ -13,13 +13,14 @@
           <a-col :md="12" :sm="24">
             <!-- 检查是否有 id 并且大于0，大于0是修改。其他是新增，新增不显示主键ID -->
             <a-form-item v-show="model && model.id > 0" label="主键ID">
-              <a-input v-decorator="['id', { initialValue: 0 }]" disabled />
+              <a-input v-decorator="['key', { initialValue: 0 }]" disabled />
             </a-form-item>
             <a-form-item
               label="重大危险源名称"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol">
               <a-input
+                v-decorator="['key1']"
                 placeholder="输入重大危险源名称" />
             </a-form-item>
             <a-form-item
@@ -28,6 +29,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key2']"
                 placeholder="输入所属公司"
               >
                 <a-select-option value="1">公司1</a-select-option>
@@ -55,6 +57,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key3']"
                 placeholder="输入单元类型"
               >
                 <a-select-option value="1">生成单元</a-select-option>
@@ -133,6 +136,7 @@
               :wrapperCol="wrapperCol"
             >
               <a-select
+                v-decorator="['key4']"
                 placeholder="输入重大危险源级别"
               >
                 <a-select-option value="1">一级</a-select-option>
@@ -180,12 +184,20 @@
               :wrapperCol="wrapperCol">
               <a-select
                 mode="multiple"
-                :default-value="['1', '2']"
+                :default-value="['']"
                 placeholder="输入易发生事故类型" >
                 <a-select-option value="1">爆炸</a-select-option>
                 <a-select-option value="2">火灾</a-select-option>
                 <a-select-option value="3">中毒</a-select-option>
               </a-select>
+            </a-form-item>
+            <a-form-item
+              label="详细地址"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol">
+              <a-input
+                v-decorator="['key5']"
+                placeholder="输入详细地址" />
             </a-form-item>
             <a-form-item
               label="经度"
@@ -212,7 +224,7 @@
 import pick from 'lodash.pick'
 
 // 表单字段
-const fields = ['name', 'fr', 'zczj', 'area', 'address']
+const fields = ['key', 'key1', 'key2', 'key3', 'key4', 'key5']
 export default {
   props: {
     visible: {

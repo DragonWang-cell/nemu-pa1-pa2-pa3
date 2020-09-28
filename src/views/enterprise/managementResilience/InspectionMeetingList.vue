@@ -162,6 +162,7 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
                 key1: '所在公司' + tmpKey,
                 key2: '会议主题' + tmpKey,
                 key3: '参会人数' + tmpKey,

@@ -162,6 +162,7 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
                 key1: '所在公司' + tmpKey,
                 key2: '培训内容' + tmpKey,
                 key3: '主讲师' + tmpKey,

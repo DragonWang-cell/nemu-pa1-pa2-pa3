@@ -165,6 +165,7 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
                 name: '企业名称' + tmpKey,
                 fr: '法人' + tmpKey,
                 zczj: '7400.0000',

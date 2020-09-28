@@ -149,6 +149,7 @@ export default {
             for (let i = 1; i < next; i++) {
               const tmpKey = key + i
               result.push({
+                key: tmpKey,
                 a1: '所属公司' + tmpKey,
                 a2: '高危工艺' + tmpKey,
                 a3: '是',
