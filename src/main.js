@@ -21,6 +21,9 @@ import './core/lazy_use'
 import './utils/filter' // global filter
 import './global.less'
 
+import constGlobal from '@/config/constVar.js'
+Vue.prototype.constGlobal = constGlobal
+
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
