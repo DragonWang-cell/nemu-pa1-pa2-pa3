@@ -1,6 +1,7 @@
 #include "common.h"
 #include <stdlib.h>
 #include "burst.h"
+#include "nemu.h"
 #include "memory.h"
 #define CACHE_BLOCK_SIZE_B 6
 #define CACHE_WAY_SIZE_B 3
@@ -16,12 +17,15 @@
 #define CACHE2_WAY_SIZE (1<<CACHE2_WAY_SIZE_B)
 #define CACHE2_SET_SIZE (1<<CACHE2_SET_SIZE_B)
 
+void ddr3read(hwaddr_t addr, void *data);
+void ddr3write(hwaddr_t addr, void *data, uint8_t *mask);
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 void cache_write(hwaddr_t addr,size_t len,uint32_t data);
 void cache2_write(hwaddr_t addr,size_t len,uint32_t data);
 uint32_t cache_read(hwaddr_t addr);
 uint32_t cache2_read(hwaddr_t addr);
+
 // jie gou ti
 struct Cache{
 	uint32_t tag;
@@ -93,12 +97,61 @@ void cache_write(hwaddr_t addr,size_t len,uint32_t data){
 }
 
 uint32_t cache2_read(hwaddr_t addr){
-	return 0;
+	uint32_t tag = addr>>(CACHE2_SET_SIZE_B+CACHE2_BLOCK_SIZE_B);
+	uint32_t set = addr>>(CACHE2_BLOCK_SIZE_B);
+	set &=(CACHE2_SET_SIZE-1);
+	uint32_t block = (addr>>CACHE2_BLOCK_SIZE_B)<<CACHE2_BLOCK_SIZE_B;
 
+	int i;
+	for(i=set*CACHE2_WAY_SIZE;i<(set+1)*CACHE2_WAY_SIZE;i++) {
+		if(cache2[i].valid&&cache2[i].tag==tag) {
+			return i;
+		}
+	}
+	srand(i);
+	i = CACHE2_WAY_SIZE *set + rand()%CACHE2_WAY_SIZE;
+	if(cache2[i].dirty&&cache2[i].valid) {
+		uint32_t addr2 = (cache2[i].tag<<(CACHE2_SET_SIZE_B+CACHE2_BLOCK_SIZE_B)) | (set<<(CACHE2_BLOCK_SIZE_B));
+		uint8_t mask[2*BURST_LEN];
+		memset(mask,1,2*BURST_LEN);
+		int j;
+		for(j=0;j<CACHE2_BLOCK_SIZE/BURST_LEN;j++) {
+			ddr3write(addr2+j*BURST_LEN,cache2[i].data+j*BURST_LEN,mask);		
+		}
+	}
+	int j;
+	for(j=0;j<CACHE2_BLOCK_SIZE/BURST_LEN;j++) {
+		ddr3read(block+j*BURST_LEN,cache2[i].data+j*BURST_LEN);	
+	}
+	cache2[i].valid = true;
+	cache2[i].tag = tag;
+	cache2[i].dirty = false;
+	return i;
 }
 void cache2_write(hwaddr_t addr,size_t len,uint32_t data){
-	return ;
-
+	uint32_t tag = addr>>(CACHE2_SET_SIZE_B+CACHE2_BLOCK_SIZE_B);
+	uint32_t set = addr>>(CACHE2_BLOCK_SIZE_B);
+	set &=(CACHE2_SET_SIZE-1);
+	uint32_t offset = addr&(CACHE2_BLOCK_SIZE-1);
+	
+	int i;
+	for(i=set*CACHE2_WAY_SIZE;i<(set+1)*CACHE2_WAY_SIZE;i++) {
+		if(cache2[i].valid&&cache2[i].tag==tag) {
+			cache2[i].dirty = true;
+			if(offset+len>CACHE2_BLOCK_SIZE) {
+				//ti huan
+				memcpy(cache2[i].data+offset,&data,CACHE2_BLOCK_SIZE-offset);
+				cache2_write(addr+CACHE2_BLOCK_SIZE-offset,len-(CACHE2_BLOCK_SIZE-offset),data>>(CACHE2_BLOCK_SIZE-offset));
+			}	
+			else {	
+				memcpy(cache2[i].data+offset,&data,len);			
+			}
+			return ;
+		}
+}
+		int j = cache2_read(addr);
+		cache2[j].dirty = true;
+		memcpy(cache2[j].data+offset,&data,len);
 }
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
