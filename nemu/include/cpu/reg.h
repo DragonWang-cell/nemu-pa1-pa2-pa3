@@ -32,6 +32,7 @@ typedef struct {
      swaddr_t eip;
 
      union {
+     	uint32_t eflags;
 		struct {
 			uint32_t CF		:1;
 			uint32_t pad0	:1;
