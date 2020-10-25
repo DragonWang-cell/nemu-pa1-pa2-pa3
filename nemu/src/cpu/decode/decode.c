@@ -1,7 +1,7 @@
 #include "common.h"
 #include "cpu/decode/decode.h"
 
-
+/* shared by all helper function */
 Operands ops_decoded;
 
 #define DATA_BYTE 1

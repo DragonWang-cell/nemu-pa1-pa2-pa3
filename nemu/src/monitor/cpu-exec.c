@@ -8,7 +8,7 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#define MAX_INSTR_TO_PRINT 10
+#define MAX_INSTR_TO_PRINT 50
 
 int nemu_state = STOP;
 
@@ -24,6 +24,7 @@ void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);
 	for(i = 0; i < len; i ++) {
+		//printf("vp : %x\n",eip + i);
 		l += sprintf(asm_buf + l, "%02x ", instr_fetch(eip + i, 1));
 	}
 	sprintf(asm_buf + l, "%*.s", 50 - (12 + 3 * len), "");
@@ -61,7 +62,6 @@ void cpu_exec(volatile uint32_t n) {
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
-
 		cpu.eip += instr_len;
 
 #ifdef DEBUG
@@ -72,19 +72,20 @@ void cpu_exec(volatile uint32_t n) {
 			printf("%s\n", asm_buf);
 		}
 #endif
-
-		/* TODO: check watchpoints here. */
-                WP *wp = scan_watchpoint();
-		if(wp != NULL) {
-			puts(asm_buf);
-			printf("\n\nHint watchpoint %d at address 0x%08x, expr = %s\n", wp->NO, cpu.eip - instr_len, wp->expr);
-			printf("old value = %#08x\nnew value = %#08x\n", wp->old_val, wp->new_val);
-			wp->old_val = wp->new_val;
-			return;
+		// Now we should check watchpoints.
+		int flag = 0;
+		WP* h = getHead();	//get head node
+		while(h != NULL) {
+			int ans = checkNode(h);
+			if(ans == -1) {
+				printf("\033[1;31mwatchpoint %d : Invalid expression\n\033[0m", h->NO), flag = 1;
+			} else if(ans == 0) {
+				flag = 1;
+			}
+			h = h->next;
 		}
-
-		if(nemu_state != RUNNING) { return; }
-
+		if(flag) nemu_state = STOP;//stop
+		/* TODO: check watchpoints here. */
 
 #ifdef HAS_DEVICE
 		extern void device_update();

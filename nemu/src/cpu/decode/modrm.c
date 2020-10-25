@@ -54,6 +54,7 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 	char index_buf[8];
 
 	if(disp_size != 0) {
+		/* has disp */
 		sprintf(disp_buf, "%s%#x", (disp < 0 ? "-" : ""), (disp < 0 ? -disp : disp));
 	}
 	else { disp_buf[0] = '\0'; }
@@ -143,6 +144,8 @@ int read_no_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 		int instr_len = load_addr(eip, &m, rm);
 		if(rm->reg == R_ESP || rm->reg == R_EBP) rm->sreg = R_SS;
 		else rm->sreg = R_DS;
+		//rm->val = swaddr_read(rm->addr, rm->size);
 		return instr_len;
 	}
 }
+
