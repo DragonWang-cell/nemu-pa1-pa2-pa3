@@ -54,7 +54,6 @@ int load_addr(swaddr_t eip, ModR_M *m, Operand *rm) {
 	char index_buf[8];
 
 	if(disp_size != 0) {
-		/* has disp */
 		sprintf(disp_buf, "%s%#x", (disp < 0 ? "-" : ""), (disp < 0 ? -disp : disp));
 	}
 	else { disp_buf[0] = '\0'; }
