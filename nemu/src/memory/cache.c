@@ -32,7 +32,16 @@ int readCache(hwaddr_t addr) {
 	j = readCache2(addr);
 	srand(i);
 	i = CACHE_WAY_SIZE * set + rand() % CACHE_WAY_SIZE;//random
-	memcpy(cache[i].data, cache2[j].data, CACHE_BLOCK_SIZE);
+	memcpy(cache[i].data, cache2[j].data, CACHE_BLOCK_SIZE);//CACHE2_BLOCK_SIZE=CACHE_BLOCK_SIZE
+
+/*
+	srand(i);
+	i = CACHE_WAY_SIZE * set + rand() % CACHE_WAY_SIZE;//random
+	for(j = 0; j < CACHE_BLOCK_SIZE / BURST_LEN; j++) {
+		ddr3_read_public(block + j * BURST_LEN , cache[i].data + j * BURST_LEN);
+	}
+*/
+
 	cache[i].valid = true;
 	cache[i].tag = tag;
 	return i;
@@ -87,6 +96,9 @@ void writeCache(hwaddr_t addr, size_t len, uint32_t data) {
 			return;
 		}
 	}
+	//dram_write(addr, len, data);
+	//fail. write cache2
+	//dram_write(addr,len,data);
 	writeCache2(addr, len, data);
 }
 
@@ -100,6 +112,7 @@ void writeCache2(hwaddr_t addr, size_t len, uint32_t data) {
 		if(cache2[i].tag == tag && cache2[i].valid) {
 			cache2[i].dirty = true;
 			if(offset + len > CACHE2_BLOCK_SIZE) {//across
+				//dram_write(addr, CACHE2_BLOCK_SIZE - offset, data);	//write through
 				memcpy(cache2[i].data + offset, &data, CACHE2_BLOCK_SIZE - offset);
 				writeCache2(addr + CACHE2_BLOCK_SIZE - offset, len - CACHE2_BLOCK_SIZE + offset, data >> (CACHE2_BLOCK_SIZE - offset));
 			} else {
@@ -109,6 +122,8 @@ void writeCache2(hwaddr_t addr, size_t len, uint32_t data) {
 			return;
 		}
 	}
+	//dram_write(addr, len, data);
+	//write back
 	i = readCache2(addr);
 	cache2[i].dirty = true;
 	memcpy(cache2[i].data + offset, &data, len);

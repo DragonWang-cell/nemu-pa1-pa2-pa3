@@ -5,7 +5,7 @@ uint32_t readTLB(uint32_t tg) {
 	for(i = 0; i < TLB_SIZE; i++) {
 		if(tlb[i].valid && tlb[i].tag == tg) return tlb[i].page;
 	}
-	return -1;
+	return -1;//invalid
 }
 
 void resetTLB() {
