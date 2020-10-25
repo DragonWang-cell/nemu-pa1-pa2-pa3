@@ -20,9 +20,7 @@ make_helper(concat(updateCPU_, SUFFIX)) {
 	return 0;
 }
 
-/* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
-	/* eip here is pointing to the immediate */
 	op_src->type = OP_TYPE_IMM;
 	op_src->imm = instr_fetch(eip, DATA_BYTE);
 	op_src->val = op_src->imm;

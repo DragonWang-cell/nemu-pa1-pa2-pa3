@@ -101,7 +101,6 @@ void restart() {
 	/* Initialize DRAM. */
 	init_ddr3();
 
-	/* Initialize Cache. */
 	resetCache();
 	resetTLB();
 }

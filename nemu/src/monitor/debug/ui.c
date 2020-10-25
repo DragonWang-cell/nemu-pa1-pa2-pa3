@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
+void display_reg();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -27,6 +28,125 @@ char* rl_gets() {
 	return line_read;
 }
 
+/* TODO: Add single step */
+static int cmd_si(char *args) {
+	char *arg = strtok(NULL, " ");
+	int i = 1;
+
+	if(arg != NULL) {
+		sscanf(arg, "%d", &i);
+	}
+	cpu_exec(i);
+	return 0;
+}
+
+/* TODO: Add info command */
+static int cmd_info(char *args) {
+	char *arg = strtok(NULL, " ");
+
+	if(arg != NULL) {
+		if(strcmp(arg, "r") == 0) {
+			display_reg();
+		}
+		else if(strcmp(arg, "w") == 0) {
+			list_watchpoint();
+		}
+	}
+	return 0;
+}
+
+/* Add examine memory */
+static int cmd_x(char *args) {
+	char *arg = strtok(NULL, " ");
+	int n;
+	swaddr_t addr;
+	int i;
+
+	if(arg != NULL) {
+		sscanf(arg, "%d", &n);
+
+		bool success;
+		addr = expr(arg + strlen(arg) + 1, &success);
+		if(success) { 
+			for(i = 0; i < n; i ++) {
+				if(i % 4 == 0) {
+					printf("0x%08x: ", addr);
+				}
+
+				printf("0x%08x ", swaddr_read(addr, 4,R_DS));
+				addr += 4;
+				if(i % 4 == 3) {
+					printf("\n");
+				}
+			}
+			printf("\n");
+		}
+		else { printf("Bad expression\n"); }
+
+	}
+	return 0;
+}
+
+/* Add expression evaluation  */
+static int cmd_p(char *args) {
+	bool success;
+
+	if(args) {
+		uint32_t r = expr(args, &success);
+		if(success) { printf("0x%08x(%d)\n", r, r); }
+		else { printf("Bad expression\n"); }
+	}
+	return 0;
+}
+
+/* Add set watchpoint  */
+static int cmd_w(char *args) {
+	if(args) {
+		int NO = set_watchpoint(args);
+		if(NO != -1) { printf("Set watchpoint #%d\n", NO); }
+		else { printf("Bad expression\n"); }
+	}
+	return 0;
+}
+
+/* Add delete watchpoint */
+static int cmd_d(char *args) {
+	int NO;
+	sscanf(args, "%d", &NO);
+	if(!delete_watchpoint(NO)) {
+		printf("Watchpoint #%d does not exist\n", NO);
+	}
+
+	return 0;
+}
+
+/* Add display backtrace */
+static int cmd_bt(char *args) {
+	const char* find_fun_name(uint32_t eip);
+	struct {
+		swaddr_t prev_ebp;
+		swaddr_t ret_addr;
+		uint32_t args[4];
+	} sf;
+
+	uint32_t ebp = cpu.ebp;
+	uint32_t eip = cpu.eip;
+	int i = 0;
+	while(ebp != 0) {
+		sf.args[0] = swaddr_read(ebp + 8, 4, R_SS);
+		sf.args[1] = swaddr_read(ebp + 12, 4, R_SS);
+		sf.args[2] = swaddr_read(ebp + 16, 4, R_SS);
+		sf.args[3] = swaddr_read(ebp + 20, 4, R_SS);
+
+		printf("#%d 0x%08x in %s (0x%08x 0x%08x 0x%08x 0x%08x)\n", i, eip, find_fun_name(eip), sf.args[0], sf.args[1], sf.args[2], sf.args[3]);
+		i ++;
+		eip = swaddr_read(ebp + 4, 4, R_SS);
+		ebp = swaddr_read(ebp, 4, R_SS);
+	}
+	return 0;
+}
+
+
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
@@ -36,174 +156,25 @@ static int cmd_q(char *args) {
 	return -1;
 }
 
-static int cmd_info(char *args){
-	if(args == NULL) return 0;
-	char opt;
-	sscanf(args, " %c", &opt);
-	if(opt == 'r') {
-		printf("%%eax 0x%x\n", cpu.eax);
-		printf("%%ecx 0x%x\n", cpu.ecx);
-		printf("%%edx 0x%x\n", cpu.edx);
-		printf("%%ebx 0x%x\n", cpu.ebx);
-		printf("%%esp 0x%x\n", cpu.esp);
-		printf("%%ebp 0x%x\n", cpu.ebp);
-		printf("%%esi 0x%x\n", cpu.esi);
-		printf("%%edi 0x%x\n", cpu.edi);
-		printf("%%eip 0x%x\n", cpu.eip);
-	} else if(opt == 'w') {
-		WP *h = getHead();
-		while(h != NULL) {
-			printf("watchpoint %d : %s\n", h->NO, h->expr);
-			h = h->next;
-		}
-	} else if(opt == 's') {
-		printf("%%gdtr base:0x%x limit:0x%x\n", cpu.gdtr.base_addr, cpu.gdtr.seg_limit);
-		const char *S[] = {"es", "cs", "ss", "ds", "fs", "gs"};
-		int i;
-		for(i = 0; i < 6; i++) {
-			printf("%%%s 0x%x base: 0x%x limit: 0x%x\n", S[i], cpu.sr[i].index, cpu.sr[i].cache.base, cpu.sr[i].cache.limit);
-		}
-	} else if(opt == 'c') {
-		printf("%%cr0 0x%x\n", cpu.cr0.val);
-		printf("%%cr3 0x%x 0x%x\n", cpu.cr3.val, cpu.cr3.page_directory_base);
-	}
-	return 0;
-}
-
-static int cmd_si(char *args) {
-	if(args == NULL) cpu_exec(1);
-	else cpu_exec(atoi(args));
-	return 0;
-}
-
-static int cmd_x(char *args) {
-	if(args == NULL) return 0;
-	uint32_t num = 0, addr;
-	bool suc;
-	while(args[0] == ' ')++args;	//trim
-	while('0' <= args[0] && args[0] <= '9') num = (num << 3) + (num << 1) + (args[0] & 15), ++args;
-	//get number
-	addr = expr(args, &suc);
-	if(!suc) {
-		printf("\033[1;31mInvalid expression\n\033[0m");
-		return 0;
-	}
-	while(num) {
-		printf("address 0x%x:", addr);
-		int i;
-		for(i = 0;i < 4; i++)printf(" 0x%x", swaddr_read(addr + i, 1, R_DS));
-		printf("\n");
-		addr += 4;
-		--num;
-	}
-	return 0;
-}
-
-static int cmd_p(char *args) {
-	if(args == NULL) return 0;
-	bool suc;
-	uint32_t ans = expr(args, &suc);	//fix bugs
-	if(!suc) {
-		printf("\033[1;31mInvalid expression\n\033[0m");
-		return 0;
-	}
-	//tokens;
-	printf("Expression %s : 0x%x\n", args, ans);
-	return 0;
-}
-
-static int cmd_w(char *args) {
-	if(args == NULL) return 0;
-	int id = insertExpr(args);
-	if(id == -1) {
-		printf("\033[1;31mInvalid expression\n\033[0m");
-		return 0;
-	}
-	printf("Add watchpoint %d\n", id);
-	return 0;
-}
-
-static int cmd_d(char *args) {
-	if(args == NULL) return 0;
-	int id;
-	sscanf(args, "%d", &id);
-	int ans = removeNode(id);//remove a node
-	if(ans == 0) {
-		printf("\033[1;31mWatchpoint %d doesn't exist\n\033[0m", id);
-	} else {
-		printf("Delete watchpoint %d successfully\n", id);
-	}
-	return 0;
-}
-
-static int cmd_goto(char *args) {
-	if(args == NULL) return 0;
-	bool suc;
-	uint32_t ans = expr(args, &suc);
-	if(!suc) {
-		printf("\033[1;31mInvalid expression\n\033[0m");
-		return 0;
-	}
-	cpu.eip = ans;
-	printf("Goto address 0x%x successfully\n", ans);
-	return 0;
-}
-
-void getFunctionFromAddress(swaddr_t addr, char *s);
-
-static int cmd_bt(char *args) {
-	swaddr_t now_ebp = reg_l(R_EBP);
-	swaddr_t now_ret = cpu.eip;
-	int cnt = 0, i;
-	char name[50];
-	while(now_ebp) {
-		getFunctionFromAddress(now_ret, name);
-		if(name[0] == '\0') break;
-		printf("#%d 0x%x: ", ++cnt, now_ret);
-		printf("%s (", name);
-		for(i = 0; i < 4; i++) {
-			printf("%d", swaddr_read(now_ebp + 8 + i * 4, 4, R_SS));
-			printf("%c", i == 3 ? ')' : ',');
-		}
-		now_ret = swaddr_read(now_ebp + 4, 4, R_SS);
-		now_ebp = swaddr_read(now_ebp, 4, R_SS);
-		printf("\n");
-	}
-	return 0;
-}
-
-static int cmd_page(char *args) {
-	if(args == NULL) return 0;
-	lnaddr_t lnaddr;
-	sscanf(args, "%x", &lnaddr);
-	hwaddr_t hwaddr = page_translate(lnaddr, 1);
-	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) {
-		printf("\033[1;33mPage address convertion is invalid.\n\033[0m");
-	}
-	printf("0x%x -> 0x%x\n", lnaddr, hwaddr);
-	return 0;
-}
-
 static int cmd_help(char *args);
 
 static struct {
 	char *name;
 	char *description;
-	int (*handler) (char *);	//A pointer (Function)
+	int (*handler) (char *);
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
-	{ "q", "Exit NEMU", cmd_q },
-	{ "si", "Continue the execution of the program in N steps", cmd_si },
-	{ "info", "Print all registers", cmd_info },
-	{ "x", "Scan the memory", cmd_x },
-	{ "p", "Calculate the value of expression", cmd_p },
-	{ "w", "Add a watchpoint", cmd_w },
-	{ "d", "Delete a watchpoint", cmd_d },
-	{ "goto", "Goto address", cmd_goto },
-	{ "bt", "Print backtrace", cmd_bt },
-	{ "page", "Convert virtual address to physical address", cmd_page },
+	{ "q", "Exit NEMU", cmd_q }, 
+
 	/* TODO: Add more commands */
+        { "si", "Single step", cmd_si },
+        { "info", "info r - print register values; info w - show watch point state", cmd_info },
+	{ "x", "Examine memory", cmd_x },
+        { "p", "Evaluate the value of expression", cmd_p },
+	{ "w", "Set watchpoint", cmd_w },
+	{ "d", "Delete watchpoint", cmd_d },
+	{ "bt", "Display backtrace", cmd_bt }
 
 };
 
@@ -245,7 +216,6 @@ void ui_mainloop() {
 		 * which may need further parsing
 		 */
 		char *args = cmd + strlen(cmd) + 1;
-//		printf("%s\n",args);
 		if(args >= str_end) {
 			args = NULL;
 		}
@@ -256,7 +226,7 @@ void ui_mainloop() {
 #endif
 
 		int i;
-		for(i = 0; i < NR_CMD; i ++) {	//Brute Force!
+		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
 				if(cmd_table[i].handler(args) < 0) { return; }
 				break;
