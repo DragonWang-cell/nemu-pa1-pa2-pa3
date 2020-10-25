@@ -3,17 +3,16 @@
 #define instr scas
 
 make_helper(concat(scas_, SUFFIX)) {
-	DATA_TYPE dest = REG(R_EAX);
-	DATA_TYPE src = MEM_R(cpu.edi);;
-	DATA_TYPE result = dest - src;
+	swaddr_t s1 = REG(R_EAX), s2 = swaddr_read(reg_l(R_EDI), DATA_BYTE, R_ES);
+	uint32_t res = s1 - s2;
+	if (cpu.DF == 0) reg_l(R_EDI) += DATA_BYTE;
+	else reg_l(R_EDI) -= DATA_BYTE;
+	concat(updateCPU_, SUFFIX) (res);
+	int len = (DATA_BYTE << 3) - 1;
+	cpu.CF = s1 < s2;
+    cpu.OF = ((s1 >> len) != (s2 >> len) && (s2 >> len) == cpu.SF);
+	print_asm("scas%s", str(SUFFIX));
 
-	update_eflags_pf_zf_sf((DATA_TYPE_S)result);
-	cpu.eflags.CF = result > dest;
-	cpu.eflags.OF = MSB((dest ^ src) & (dest ^ result));
-
-	cpu.edi += (cpu.eflags.DF ? -DATA_BYTE : DATA_BYTE);
-
-	print_asm("scas" str(SUFFIX) " %%es:(%%edi),%%%s", REG_NAME(R_EAX));
 	return 1;
 }
 

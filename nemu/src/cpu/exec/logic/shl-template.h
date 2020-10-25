@@ -10,8 +10,7 @@ static void do_execute () {
 	dest <<= count;
 	OPERAND_W(op_dest, dest);
 
-	update_eflags_pf_zf_sf(dest);
-
+	concat(updateCPU_, SUFFIX) (dest);
 	print_asm_template2();
 }
 
