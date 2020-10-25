@@ -14,5 +14,5 @@
 
 /* for instruction encoding overloading */
 make_helper_v(shl_rm_1)
-make_helper_v(shl_rm_cl)
+make_helper_v(shl_rm_cl);
 make_helper_v(shl_rm_imm)
