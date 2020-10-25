@@ -19,6 +19,7 @@ void init_cond();
 /* Initialization phase 1
  * The assembly code in start.S will finally jump here.
  */
+
 void init() {
 #ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
@@ -32,6 +33,8 @@ void init() {
 
 	/* Jump to init_cond() to continue initialization. */
 	asm volatile("jmp *%0" : : "r"(init_cond));
+//	set_bp();
+//	init_cond();
 
 	panic("should not reach here");
 }
@@ -47,6 +50,7 @@ void init_cond() {
 	 */
 	init_idt();
 #endif
+
 
 #ifdef HAS_DEVICE
 	/* Initialize the intel 8259 PIC (Programmable interrupt controller). */
@@ -77,7 +81,6 @@ void init_cond() {
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 #endif
-
 	/* Load the program. */
 	uint32_t eip = loader();
 	
