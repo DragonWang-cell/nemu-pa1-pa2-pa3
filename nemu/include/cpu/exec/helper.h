@@ -8,51 +8,7 @@
 	make_helper(concat(name, _v)) { \
 		return (ops_decoded.is_operand_size_16 ? concat(name, _w) : concat(name, _l)) (eip); \
 	}
-static inline bool check_cc_b() {
-	return cpu.CF;
-}
 
-
-static inline bool check_cc_e() {
-	return cpu.ZF;
-}
-
-static inline bool check_cc_ne() {
-	return !cpu.ZF;
-}
-
-static inline bool check_cc_be() {
-	return cpu.CF | cpu.ZF;
-}
-
-static inline bool check_cc_a() {
-	return !(cpu.CF | cpu.ZF);
-}
-
-static inline bool check_cc_s() {
-	return cpu.SF;
-}
-
-static inline bool check_cc_ns() {
-	return !cpu.SF;
-}
-
-
-static inline bool check_cc_l() {
-	return cpu.SF ^ cpu.OF;
-}
-
-static inline bool check_cc_ge() {
-	return !(cpu.SF ^ cpu.OF);
-}
-
-static inline bool check_cc_le() {
-	return (cpu.SF ^ cpu.OF) | cpu.ZF;
-}
-
-static inline bool check_cc_g() {
-	return !((cpu.SF ^ cpu.OF) | cpu.ZF);
-}
 #define do_execute concat4(do_, instr, _, SUFFIX)
 
 #define make_instr_helper(type) \

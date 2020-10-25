@@ -13,8 +13,11 @@ typedef struct {
 } TLB;
 
 TLB tlb[TLB_SIZE];
+
 uint32_t readTLB(uint32_t tg);
+
 void resetTLB();
+
 void writeTLB(uint32_t tg, uint32_t page);
 
 #endif
