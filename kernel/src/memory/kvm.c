@@ -7,8 +7,6 @@ static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
 PDE* get_kpdir() { return kpdir; }
-
-/* set up page tables for kernel */
 void init_page(void) {
 	CR0 cr0;
 	CR3 cr3;
@@ -19,13 +17,18 @@ void init_page(void) {
 	/* make all PDEs invalid */
 	memset(pdir, 0, NR_PDE * sizeof(PDE));
 
-
+	/* fill PDEs */
 	for (pdir_idx = 0; pdir_idx < PHY_MEM / PT_SIZE; pdir_idx ++) {
 		pdir[pdir_idx].val = make_pde(ptable);
 		pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 
 		ptable += NR_PTE;
 	}
+	/* fill PTEs */
+
+	/* We use inline assembly here to fill PTEs for efficiency.
+	 * If you do not understand it, refer to the C code below.
+	 */
 
 	asm volatile ("std;\
 	 1: stosl;\
