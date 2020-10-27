@@ -27,8 +27,6 @@ uint32_t mm_brk(uint32_t new_brk) {
 		cur_brk = new_brk;
 	}
 
-	// If new_brk == 0, the brk() syscall should fail and return
-	// the current break. See the NOTE of `man 2 brk' for details.
 
 	return cur_brk;
 }
@@ -45,4 +43,3 @@ void init_mm() {
 
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }
-
