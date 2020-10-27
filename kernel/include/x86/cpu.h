@@ -55,8 +55,6 @@ static inline void
 cli(void) {
 	asm volatile("cli");
 }
-
-/* put the CPU into idle, waiting for the next interrupt */
 static inline void
 wait_intr() {
 	asm volatile("hlt");
