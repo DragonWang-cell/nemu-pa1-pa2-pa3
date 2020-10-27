@@ -53,12 +53,12 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/switch
+USERPROG := obj/testcase/shuixianhua
 #ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)
-	objcopy -S -O binary $(ENTRY) shuixianhua
+	objcopy -S -O binary $(ENTRY) entry
 
 run: $(nemu_BIN) $(USERPROG) entry
 	$(call git_commit, "run")
