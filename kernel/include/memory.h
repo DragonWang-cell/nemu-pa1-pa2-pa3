@@ -14,8 +14,6 @@
 
 /* the maxinum loader size is 16MB */
 #define KMEM      (16 * 1024 * 1024)
-
-/* NEMU has 128MB physical memory  */
 #define PHY_MEM   (128 * 1024 * 1024)
 
 #define make_invalid_pde() 0
