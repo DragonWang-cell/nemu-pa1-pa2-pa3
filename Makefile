@@ -58,7 +58,7 @@ USERPROG := obj/testcase/switch
 ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)
-	objcopy -S -O binary $(ENTRY) entry
+	objcopy -S -O binary $(ENTRY) shuixianhua
 
 run: $(nemu_BIN) $(USERPROG) entry
 	$(call git_commit, "run")
